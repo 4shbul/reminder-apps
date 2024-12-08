@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Pengingat Jadwal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Selamat datang, {{ current_user.username }}</h1>
+        <a href="{{ url_for('logout') }}">Logout</a>
+
+        <form action="{{ url_for('add_jadwal') }}" method="POST">
+            <label for="judul">Jadwal:</label>
+            <input type="text" id="judul" name="judul" required>
+            <label for="waktu">Waktu (HH:MM):</label>
+            <input type="time" id="waktu" name="waktu" required>
+            <button type="submit">Tambah Jadwal</button>
+        </form>
+
+        <h2>Jadwal Anda</h2>
+        <ul>
+            {% for jadwal in jadwals %}
+            <li>{{ jadwal.judul }} - {{ jadwal.waktu }}
+                <form action="{{ url_for('delete_jadwal', jadwal_id=jadwal.id) }}" method="POST">
+                    <button type="submit">Hapus</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
